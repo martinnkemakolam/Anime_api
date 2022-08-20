@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #111;
+        width: 100%;
+    }
+
+    p {
+        margin: 3rem 1rem 1rem 1rem;
+        padding: 1rem;
+        background-color: #333;
+        color: #fff;
+        width: 90vw;
+        line-height: 2rem;
+        word-wrap: none;
+    }
+
+    button {
+        padding: 1rem 3rem;
+        margin-top: 4px;
+    }
+
+    input {
+        width: 300px;
+        height: 40px;
+        outline: none;
+    }
+</style>
+
+<body>
+    <div class="body">
+        <button id="btn">submit</button>
+    </div>
+</body>
+<script>
+    let div = document.getElementsByClassName('body')
+    let btn = document.getElementById('btn')
+    let quote = []
+
+    fetch('https://animechan.vercel.app/api/quotes')
+        .then(response => response.json())
+        .then(quotes => {
+            console.log(quotes)
+            let html;
+            for (const i in quotes) {
+                html = `
+                <p id="quote">${quotes[i].quote}</p>
+                <input type="text" name="" class="check" placeholder='WHAT CHARACTER SAID THIS'>
+               `
+                div[0].insertAdjacentHTML('beforeend', html)
+                quote.push(quotes[i].character)
+            }
+            let input = document.getElementsByClassName('check')
+            let score = 0
+            btn.onclick = () => {
+                for (const key in quote) {
+                    if (quote[key] === input[key].value) {
+                        score++
+                    } else {
+                        score
+                    }
+                }
+                alert(score)
+                score = 0
+            }
+        });
+
+
+
+
+</script>
+
+</html>
